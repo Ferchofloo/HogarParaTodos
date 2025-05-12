@@ -49,6 +49,7 @@ INSERT INTO @tmp EXEC dbo.sp_CreateUsuarioWeb
     @Nombre     = 'Test User',
     @Email      = 'testuser@correo.com',
     @Contrasena = 'userPass',
+    @dui.       = '12345678-9',
     @Telefono   = '9999-0000',
     @Direccion  = 'Pruebas 123';
 SELECT @UserID = val FROM @tmp;

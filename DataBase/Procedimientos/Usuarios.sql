@@ -18,7 +18,8 @@ CREATE PROCEDURE [dbo].[sp_CrearUsuario]
     @p_Email       VARCHAR(100),
     @p_Contrasena  VARCHAR(255),
     @p_Telefono    VARCHAR(15) = NULL,
-    @p_Direccion   VARCHAR(200) = NULL
+    @p_Direccion   VARCHAR(200) = NULL,
+    @p_DUI   VARCHAR(200) = NULL
 AS
 BEGIN
     -- Validar que el email no exista
@@ -33,6 +34,7 @@ BEGIN
         Contrasena,
         Telefono,
         Direccion,
+        DUI,
         FechaRegistro
     )
     VALUES 
@@ -42,6 +44,7 @@ BEGIN
         @p_Contrasena,
         @p_Telefono,
         @p_Direccion,
+        @p_DUI,
         GETDATE()
     );
 END;

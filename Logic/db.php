@@ -12,6 +12,6 @@ if (!$conn) {
     die(print_r(sqlsrv_errors(), true));
     
 }else{
-    // echo "wazaaa funca alaverga puta mierda maten a ala evelyn";
+    // echo "Base conectada";
 }
 ?>

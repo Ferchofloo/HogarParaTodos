@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #2F4F4F;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    
+    .main-box {
+      display: flex;
+      background: #72654e;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 900px;
+      height: 500px;
+    }
+    
+    .image-box {
+      flex: 1;
+      background-color: #dfdfad;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+    
+    .container {
+      flex: 1;
+      background-color: #a0b6bd;
+      color: #FFFFE0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+    }
+    
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
+    }
+    
+    form h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: #fff;
+    }
+    
+    input {
+      width: 94%;
+      padding: 8px 10px;
+      margin: 6px auto;
+      border-radius: 6px;
+      border: none;
+      font-size: 13px;
+    }
+    
+    button {
+      width: 98%;
+      padding: 12px;
+      background-color: #2F4F4F;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin: 10px auto 0;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #a86348;
+    }
+    
+    .switch-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #fff;
+    }
+    
+    .switch-link a {
+      color: #2F4F4F;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-box">
+    <div class="image-box">
+      <img src="img/Logo-Ayudame a vivir.png" alt="Imagen decorativa" />
+    </div>
+    <div class="container">
+      <form id="login-form" method="POST" action="../logic/login_handler.php">
+        <h2>Iniciar Sesión</h2>
+        <?php 
+          // Mostrar mensajes de error o registro exitoso, según los parámetros de la URL
+          if(isset($_GET['error'])) {
+            echo "<p style='color:red;'>Credenciales incorrectas</p>";
+          }
+          if(isset($_GET['registro'])) {
+            echo "<p style='color:green;'>Registro exitoso. Inicia sesión.</p>";
+          }
+        ?>
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
+        <input type="password" name="clave" placeholder="Contraseña" required>
+        <button type="submit">Entrar</button>
+        <div class="switch-link">
+          ¿No tienes cuenta? <a href="register.php">Regístrate</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

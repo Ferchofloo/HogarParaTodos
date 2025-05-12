@@ -27,6 +27,7 @@
     <ul>
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><a href="crear_mascota.php">Registrar Mascota</a></li>
+        <li><a href="lista_mascotas.php">Mascotas</a></li>
         <li><a href="panel_admin.php">Panel Administrador</a></li>
         <li><a href="logout.php">Cerrar Sesión</a></li>
     </ul>

@@ -1,8 +1,16 @@
+<?php
+session_start();
+// if(isset($_GET['mensaje']) && $_GET['mensaje'] === 'logout'){
+//     echo "<p style='color:red;'>Tu sesión ha sido cerrada. Debes iniciar sesión nuevamente.</p>";
+// }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar Sesión</title>
   <style>
     body {
@@ -14,7 +22,7 @@
       align-items: center;
       margin: 0;
     }
-    
+
     .main-box {
       display: flex;
       background: #72654e;
@@ -24,7 +32,7 @@
       width: 900px;
       height: 500px;
     }
-    
+
     .image-box {
       flex: 1;
       background-color: #dfdfad;
@@ -32,14 +40,14 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .image-box img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       padding: 20px;
     }
-    
+
     .container {
       flex: 1;
       background-color: #a0b6bd;
@@ -51,22 +59,22 @@
       overflow: hidden;
       padding: 40px;
     }
-    
+
     form {
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center; 
+      align-items: center;
     }
-    
+
     form h2 {
       text-align: center;
       margin-bottom: 25px;
       font-size: 24px;
       color: #fff;
     }
-    
+
     input {
       width: 94%;
       padding: 8px 10px;
@@ -75,7 +83,7 @@
       border: none;
       font-size: 13px;
     }
-    
+
     button {
       width: 98%;
       padding: 12px;
@@ -88,18 +96,18 @@
       margin: 10px auto 0;
       transition: background-color 0.3s ease;
     }
-    
+
     button:hover {
       background-color: #a86348;
     }
-    
+
     .switch-link {
       text-align: center;
       margin-top: 15px;
       font-size: 14px;
       color: #fff;
     }
-    
+
     .switch-link a {
       color: #2F4F4F;
       font-weight: bold;
@@ -108,22 +116,28 @@
     }
   </style>
 </head>
+
 <body>
   <div class="main-box">
     <div class="image-box">
-      <img src="img/Logo-Ayudame a vivir.png" alt="Imagen decorativa" />
+      <a href="index.php" class="image-box">
+        <img src="img/Logo-Ayudame a vivir.png" alt="Imagen decorativa" style="cursor:pointer;">
+      </a>
     </div>
     <div class="container">
       <form id="login-form" method="POST" action="../logic/login_handler.php">
         <h2>Iniciar Sesión</h2>
-        <?php 
-          // Mostrar mensajes de error o registro exitoso, según los parámetros de la URL
-          if(isset($_GET['error'])) {
-            echo "<p style='color:red;'>Credenciales incorrectas</p>";
-          }
-          if(isset($_GET['registro'])) {
-            echo "<p style='color:green;'>Registro exitoso. Inicia sesión.</p>";
-          }
+        <?php
+        // Mostrar mensajes de error o registro exitoso, según los parámetros de la URL
+        if (isset($_GET['error'])) {
+          echo "<p style='color:red;'>Credenciales incorrectas</p>";
+        }
+        if (isset($_GET['registro'])) {
+          echo "<p style='color:green;'>Registro exitoso. Inicia sesión.</p>";
+        }
+        if (isset($_GET['mensaje']) && $_GET['mensaje'] === 'logout') {
+          echo "<p style='color:red;'>Tu sesión ha sido cerrada. Debes iniciar sesión nuevamente.</p>";
+        }
         ?>
         <input type="email" name="correo" placeholder="Correo electrónico" required>
         <input type="password" name="clave" placeholder="Contraseña" required>
@@ -135,4 +149,5 @@
     </div>
   </div>
 </body>
+
 </html>

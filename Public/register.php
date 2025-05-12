@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_GET['mensaje']) && $_GET['mensaje'] === 'logout'){
+    echo "<p style='color:red;'>Tu sesión ha sido cerrada. Debes iniciar sesión nuevamente.</p>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -110,8 +117,10 @@
 </head>
 <body>
   <div class="main-box">
-    <div class="image-box">
-      <img src="img/Logo-Ayudame a vivir.png" alt="Imagen decorativa" />
+    <div class="image-box" class="image-box">
+      <a href="index.php">
+        <img src="img/Logo-Ayudame a vivir.png" alt="Imagen decorativa" style="cursor:pointer;">
+      </a>
     </div>
     <div class="container">
       <form id="register-form" method="POST" action="../logic/register_handler.php">

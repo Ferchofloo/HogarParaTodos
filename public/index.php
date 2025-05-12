@@ -2,6 +2,7 @@
 session_start();
 $loggedIn = isset($_SESSION['usuario']);
 $tipoUsuario = $_SESSION['tipo'] ?? 'usuario'; // Define el tipo de usuario
+include_once '../Logic/db.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -129,34 +130,74 @@ $tipoUsuario = $_SESSION['tipo'] ?? 'usuario'; // Define el tipo de usuario
   ?>
 
   <div class="container">
-    <h2>Encuentra a tu compañero ideal</h2>
-    <p class="lead">Conectamos corazones humanos con mascotas que necesitan un hogar.</p>
-    
-    <ul class="features-list">
-      <li>
-        <strong>🐶 Mascotas Disponibles:</strong> 
-        <span>Descubre a nuestros amigos esperando una familia</span>
-      </li>
-      <?php if (!$loggedIn) { ?>
-        <li>
-          <strong>🔑 Acceso a la Comunidad:</strong>
-          <span>Únete para gestionar tus solicitudes de adopción</span>
-          <div class="auth-buttons">
-            <a href="login.phpz" class="login-btn">Iniciar Sesión</a>
-            <a href="#" class="register-btn">Registrarse</a>
-          </div>
-        </li>
-      <?php } else if ($tipoUsuario === 'usuario') { ?>
-        <li>
-          <strong>❤️ Solicitar Adopción:</strong> 
-          <span>Inicia el proceso para adoptar</span>
-        </li>
-        <li>
-          <strong>📋 Mi Perfil:</strong> 
-          <span>Administra tu información y solicitudes</span>
-        </li>
-      <?php } ?>
-    </ul>
+    <?php if ($loggedIn && $tipoUsuario === 'admin') { ?>
+         <!-- Contenido exclusivo para administradores -->
+         <h2>Bienvenido, Administrador</h2>
+         <p class="lead">Este es tu panel de administración de <strong>HogarParaTodos</strong>.</p>
+         <ul class="features-list">
+             <li>
+                 <strong>📊 Estadísticas:</strong>
+                 <span>Accede a informes y datos sobre adopciones, visitas y actividades de la plataforma.</span>
+             </li>
+             <li>
+                 <strong>🛠 Gestión de Solicitudes:</strong>
+                 <span>Revisa, aprueba o rechaza las solicitudes de adopción recibidas.</span>
+             </li>
+             <li>
+                 <strong>🐾 Gestión de Mascotas:</strong>
+                 <span>Administra el catálogo de mascotas, actualiza sus estados y verifica la información.</span>
+             </li>
+         </ul>
+         <p>Desde este panel, puedes supervisar todos los aspectos relacionados con el funcionamiento del centro de adopción y garantizar que cada mascota reciba la atención que merece.</p>
+    <?php } else { ?>
+         <!-- Contenido para usuarios y visitantes -->
+         <h2>Encuentra a tu compañero ideal</h2>
+         <p class="lead">Conectamos corazones humanos con mascotas que necesitan un hogar.</p>
+         
+         <ul class="features-list">
+             <li>
+                 <strong>🐶 Mascotas Disponibles:</strong>
+                 <span>Descubre a nuestros amigos esperando una familia</span>
+                 <!-- Mostrar las 2 mascotas más recientes disponibles -->
+                 <ul class="recent-mascotas" style="margin-top:10px; list-style: none; padding: 0;">
+                   <?php
+                   // Consulta para obtener 2 mascotas disponibles ordenadas por fecha de subida descendente
+                   $sql_available = "SELECT TOP 2 Nombre, Especie, FotoURL FROM Mascota WHERE Estado = 'disponible' ORDER BY FechaSubida DESC";
+                   $stmt_available = sqlsrv_query($conn, $sql_available);
+                   while ($mascota = sqlsrv_fetch_array($stmt_available, SQLSRV_FETCH_ASSOC)) {
+                   ?>
+                     <li style="display: flex; align-items: center; margin: 5px 0;">
+                       <img src="<?php echo htmlspecialchars($mascota['FotoURL']); ?>" alt="<?php echo htmlspecialchars($mascota['Nombre']); ?>" style="width:50px; height:50px; object-fit:cover; border-radius:50%; margin-right:10px;">
+                       <span><?php echo htmlspecialchars($mascota['Nombre']); ?> (<?php echo htmlspecialchars($mascota['Especie']); ?>)</span>
+                     </li>
+                   <?php } ?>
+                 </ul>
+             </li>
+             <?php if (!$loggedIn) { ?>
+                 <li>
+                     <strong>🔑 Acceso a la Comunidad:</strong>
+                     <span>Únete para gestionar tus solicitudes de adopción</span>
+                     <div class="auth-buttons">
+                         <a href="login.php" class="login-btn">Iniciar Sesión</a>
+                         <a href="register.php" class="register-btn">Registrarse</a>
+                     </div>
+                 </li>
+             <?php } else if ($tipoUsuario === 'usuario') { ?>
+                 <li>
+                     <strong>❤️ Solicitar Adopción:</strong>
+                     <span>Inicia el proceso para adoptar</span>
+                 </li>
+                 <li>
+                     <strong>📋 Mi Perfil:</strong>
+                     <span>Administra tu información y solicitudes</span>
+                 </li>
+             <?php } ?>
+         </ul>
+         <!-- Información adicional para usuarios/visitantes -->
+         <p>En <strong>HogarParaTodos</strong> trabajamos incansablemente para unir a mascotas necesitadas con familias que les puedan brindar un hogar lleno de amor y cuidado. Nuestro centro de adopción se dedica a garantizar que cada mascota reciba la atención y el cariño que merece.</p>
+         <p>Contamos con un equipo profesional que evalúa el estado de salud y comportamiento de cada animal, asegurando que se encuentren en óptimas condiciones para la adopción. Además, ofrecemos asesoría personalizada durante todo el proceso, garantizando una transición exitosa para la mascota y la familia adoptante.</p>
+         <p>Únete a nuestra comunidad y descubre la felicidad de brindar una segunda oportunidad a un ser que espera ser amado. En <strong>HogarParaTodos</strong> creemos que cada vida cuenta y que, juntos, podemos construir un mundo con más empatía y compromiso hacia los animales.</p>
+    <?php } ?>
   </div>
 
   <footer>

@@ -1,3 +1,18 @@
+-- =============================================
+-- Procedimiento: AgregarUsuario
+-- Autor: [Tu nombre]
+-- Fecha: [Fecha de creación]
+-- Descripción: Inserta un nuevo usuario en la tabla Usuarios con datos personales básicos.
+--              Valida que el correo electrónico no esté ya registrado.
+-- Parámetros:
+--   @Nombre NVARCHAR(100)        => Nombre completo del usuario.
+--   @CorreoElectronico NVARCHAR  => Correo electrónico único del usuario.
+--   @Contrasena NVARCHAR         => Contraseña del usuario.
+--   @Rol NVARCHAR(50)            => Rol asignado (por ejemplo, 'Administrador' o 'Solicitante').
+-- Ejemplo de uso:
+--   EXEC AgregarUsuario 'Carlos Pérez', 'carlos@email.com', 'clave123', 'Solicitante';
+-- =============================================
+
 CREATE PROCEDURE [dbo].[sp_CrearUsuario]
     @p_Nombre      VARCHAR(100),
     @p_Email       VARCHAR(100),
@@ -31,6 +46,22 @@ BEGIN
     );
 END;
 GO
+
+-- =============================================
+-- Procedimiento: ActualizarUsuario
+-- Autor: [Tu nombre]
+-- Fecha: [Fecha de creación]
+-- Descripción: Actualiza la información de un usuario existente según su ID.
+--              Permite modificar nombre, correo, contraseña y rol.
+-- Parámetros:
+--   @IdUsuario INT               => ID del usuario a actualizar.
+--   @NuevoNombre NVARCHAR(100)  => Nuevo nombre del usuario.
+--   @NuevoCorreo NVARCHAR       => Nuevo correo electrónico.
+--   @NuevaContrasena NVARCHAR   => Nueva contraseña.
+--   @NuevoRol NVARCHAR(50)      => Nuevo rol asignado.
+-- Ejemplo de uso:
+--   EXEC ActualizarUsuario 5, 'Ana Torres', 'ana@email.com', 'passNueva', 'Administrador';
+-- =============================================
 
 CREATE PROCEDURE [dbo].[sp_ModificarUsuario]
     @p_UsuarioID INT,

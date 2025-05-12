@@ -1,6 +1,14 @@
 <?php
 include_once '../Logic/db.php';
 session_start();
+// header("Cache-Control: no-cache, no-store, must-revalidate");
+// header("Pragma: no-cache");
+// header("Expires: 0");
+
+// if(!isset($_SESSION['usuario'])){
+//     header("Location: login.php?mensaje=error");
+//     exit;
+// }
 
 $sql = "SELECT MascotaID, Nombre, Especie, Raza, Edad, Descripcion, FotoURL, Estado, FechaSubida 
         FROM Mascota 
@@ -118,7 +126,7 @@ if (!$stmt) {
         .adoption-btn:hover {
             background: #FF8F00;
         }
-
+        
         .back-link {
             display: block;
             text-align: center;
@@ -163,14 +171,12 @@ if (!$stmt) {
                         <div class="status <?php echo str_replace(' ', '-', strtolower($row['Estado'])); ?>">
                             <?php echo htmlspecialchars($row['Estado']); ?>
                         </div>
-
-                        <?php if ($row['Estado'] == 'disponible') { ?>
-                            <a href="solicitar_adopcion.php?mascotaID=<?php echo $row['MascotaID']; ?>" class="adoption-btn">
-                                🏠 Solicitar Adopción
-                            </a>
-                        <?php } elseif ($row['Estado'] == 'en proceso') { ?>
-                            <p class="pet-detail">Esta mascota está en proceso de adopción</p>
-                        <?php } ?>
+                        
+                        <!-- Se elimina el botón de solicitar adopción y editar.
+                             Se muestra solo el botón para ver detalles. -->
+                        <a href="ver_mascota.php?mascotaID=<?php echo $row['MascotaID']; ?>" class="adoption-btn" style="background: var(--primary); margin-top: 0.5rem;">
+                            📖 Ver Detalles
+                        </a>
                     </div>
                 </div>
             <?php } ?>
